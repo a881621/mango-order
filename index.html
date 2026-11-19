@@ -30,7 +30,8 @@ var APP='https://script.google.com/macros/s/AKfycbw94AFR8EnRTZBQqwtj8wJAZ-XLNKMm
 var q=new URLSearchParams(location.search), k=q.get('k')||'', go=q.get('go');
 var target=APP+'?key='+encodeURIComponent(k);
 if(k&&go){                                                   // 從主畫面圖示點進來：把訂單頁整頁內嵌在這裡（不會出現 Google 的藍色提示條）
-  var f=document.createElement('iframe'); f.src=target; f.allow='web-share; clipboard-write';
+  var f=document.createElement('iframe'); f.setAttribute('credentialless','');   // 不帶 Google 登入狀態去開：同時登入多個 Google 帳號時才不會被 Google 擋下來
+  f.src=target; f.allow='web-share; clipboard-write';
   f.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;border:0;background:#f2f3f5';
   document.body.style.margin='0'; document.body.appendChild(f);
   // 訂單頁把寄件單 PDF 交過來時，跳出一顆按鈕讓你按一下送去列印（iPhone 規定分享一定要由你親手按）
