@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>芒果訂單</title>
+<meta name="apple-mobile-web-app-title" content="芒果訂單">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+body{font-family:-apple-system,"PingFang TC","Noto Sans Thai",sans-serif;margin:0;background:#fdf3e7;color:#1c1c1e;font-size:18px;line-height:1.6}
+.box{max-width:420px;margin:0 auto;padding:28px 20px;text-align:center}
+img{width:120px;height:120px;border-radius:26px;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+h1{font-size:22px;margin:16px 0 8px}ol{text-align:left;padding-left:24px}li{margin:8px 0}
+a.btn{display:block;margin-top:18px;padding:14px;border-radius:12px;background:#0a66d8;color:#fff;text-decoration:none;font-weight:600}
+.note{color:#555;font-size:15px;margin-top:14px}
+</style></head><body>
+<!-- 入口頁：只負責讓 iPhone 主畫面圖示是芒果圖，然後帶你進訂單頁。
+     金鑰不放在這個網頁裡，是帶在你加入主畫面的那個網址上（?k=金鑰），所以只存在你自己的手機。 -->
+<div class="box" id="box" style="display:none">
+  <img src="icon-512.png" alt="">
+  <h1 id="t1"></h1>
+  <div id="body"></div>
+</div>
+<script>
+var APP='https://script.google.com/macros/s/AKfycbw94AFR8EnRTZBQqwtj8wJAZ-XLNKMmoVCl37uwfysq8_-CMlkZjiIkNBiug4LcUIxi0g/exec';
+var q=new URLSearchParams(location.search), k=q.get('k')||'', go=q.get('go');
+var target=APP+'?key='+encodeURIComponent(k);
+if(k&&go){ location.replace(target); }                      // 從主畫面圖示點進來：直接進訂單頁
+else{
+  document.getElementById('box').style.display='';
+  if(!k){ document.getElementById('t1').textContent='芒果訂單';
+    document.getElementById('body').innerHTML='<p>這個連結少了金鑰，請用店家給你的完整連結開啟。</p><p>ลิงก์นี้ไม่มีรหัส กรุณาเปิดด้วยลิงก์เต็มที่ร้านให้</p>'; }
+  else{
+    // 先把網址改成「點了就直接進去」的版本，這樣加入主畫面時存下來的就是它
+    try{ history.replaceState(null,'',location.pathname+'?k='+encodeURIComponent(k)+'&go=1'); }catch(e){}
+    document.getElementById('t1').textContent='把芒果訂單加到主畫面';
+    document.getElementById('body').innerHTML='<ol><li>按 Safari 下方的「分享」鍵（方框加向上箭頭）</li><li>往下滑，按「加入主畫面」</li><li>按右上角「加入」</li></ol>'
+      +'<p class="note">之後點主畫面的芒果圖示，就會直接打開訂單頁。</p>'
+      +'<ol><li>กดปุ่ม "แชร์" ด้านล่างของ Safari</li><li>เลื่อนลง กด "เพิ่มไปยังหน้าจอโฮม"</li><li>กด "เพิ่ม"</li></ol>'
+      +'<a class="btn" href="'+target+'">這次先直接進訂單頁 / เข้าหน้าออเดอร์</a>';
+  }
+}
+</script>
+</body></html>
